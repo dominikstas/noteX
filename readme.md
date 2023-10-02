@@ -9,7 +9,6 @@ NoteX is currently a straightforward text editor with aspirations to evolve into
 ## v1.0
 
 At its current version (v1.0), NoteX is essentially a simple notepad with the following features:
-
 -Write notes
 -Open and edit .txt files
 -Save files
