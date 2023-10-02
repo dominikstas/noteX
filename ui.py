@@ -1,7 +1,6 @@
 import sys
 import typing
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QTextEdit, QPushButton, QWidget, QFileDialog
+from PyQt5.QtWidgets import  QMessageBox,  QMainWindow, QVBoxLayout, QTextEdit, QPushButton, QWidget, QFileDialog
 
 class UiClass(QMainWindow):
     def __init__(self):
@@ -31,6 +30,11 @@ class UiClass(QMainWindow):
         save_button = QPushButton('Save', self)
         save_button.clicked.connect(self.save_note)
         layout.addWidget(save_button)
+
+        #create new file button
+        new_button = QPushButton('New', self)
+        new_button.clicked.connect(self.new_note)
+        layout.addWidget(new_button)
     
     #open button funcion
     def open_note(self):
@@ -50,4 +54,26 @@ class UiClass(QMainWindow):
             with open(file_name, 'w') as file:
                 file.write(self.text_edit.toPlainText())
 
+    #create button function
+    def new_note(self):
+        self.text_edit.clear()
 
+    
+    #Check if user save his file before quit
+    def closeEvent(self, event):
+        
+        #check if document is modified
+        if self.text_edit.document().isModified():
+            
+            #Alert
+            reply = QMessageBox.question(self, 'Save changes', 'Do you want to save the note?', 
+                                         QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+            #Save
+            if reply == QMessageBox.Yes:
+                self.save_note()
+            #Cancel
+            elif reply == QMessageBox.Cancel:
+                event.ignore()
+            #Discard
+            elif reply == QMessageBox.No:
+                sys.exit()
