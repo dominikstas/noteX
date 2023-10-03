@@ -57,15 +57,6 @@ class UiClass(QMainWindow):
         save_note_action.triggered.connect(self.save_note)
         file_menu.addAction(save_note_action)
     
-    #open button funcion
-    def open_note(self):
-        options = QFileDialog.Options()
-        options != QFileDialog.ReadOnly
-        file_name, _ = QFileDialog.getOpenFileName(self, "Open file", "", "Text files (*.txt);;All files (*)", options=options)
-        if file_name:
-            with open(file_name, 'r') as file:
-                self.text_edit.setPlainText(file.read())
-
     #save button function
     def save_note(self):
         options = QFileDialog.Options()
@@ -74,27 +65,46 @@ class UiClass(QMainWindow):
         if file_name:
             with open(file_name, 'w') as file:
                 file.write(self.text_edit.toPlainText())
-
-    #create button function
-    def new_note(self):
-        self.text_edit.clear()
-
     
-    #Check if user save his file before quit
-    def closeEvent(self, event):
-        
-        #check if document is modified
+    
+
+    ### Alert ### 
+
+#check document
+    def check_modified_document(self):
         if self.text_edit.document().isModified():
-            
-            #Alert
+
+        # Alert
             reply = QMessageBox.question(self, 'Save changes', 'Do you want to save the note?', 
-                                         QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
-            #Save
+                                     QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+        # Save
             if reply == QMessageBox.Yes:
                 self.save_note()
-            #Cancel
+        # Cancel
             elif reply == QMessageBox.Cancel:
-                event.ignore()
-            #Discard
-            elif reply == QMessageBox.No:
-                sys.exit()
+                return False
+        return True
+
+
+    def closeEvent(self, event):
+        if not self.check_modified_document():
+            event.ignore()
+        else:
+            event.accept()
+
+#new note
+    def new_note(self):
+        if not self.check_modified_document():
+            return
+        self.text_edit.clear()
+
+#open note
+    def open_note(self):
+        if not self.check_modified_document():
+            return
+        options = QFileDialog.Options()
+        options != QFileDialog.ReadOnly
+        file_name, _ = QFileDialog.getOpenFileName(self, "Open file", "", "Text files (*.txt);;All files (*)", options=options)
+        if file_name:
+            with open(file_name, 'r') as file:
+                self.text_edit.setPlainText(file.read())

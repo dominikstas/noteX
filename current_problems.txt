@@ -1,2 +1,0 @@
-- alert dziala gdy zamykasz aplikacje, ale nie gdy
-    otwierasz inny plik
