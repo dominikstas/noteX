@@ -17,7 +17,11 @@ class UiClass(QMainWindow):
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
 
+        layout = QVBoxLayout(central_widget)
+
+        #text
         self.text_edit = QTextEdit(self)
+        layout.addWidget(self.text_edit)
 
 
         #navbar

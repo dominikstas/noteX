@@ -1,0 +1,4 @@
+1. pole tekstowe nie dziala
+2. wykrywa zmiany gdy klikam na klawiaturze, chociaz nie ma zadnego tekstu
+    (biała czcionka?)
+    
