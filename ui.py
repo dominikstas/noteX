@@ -6,6 +6,11 @@ class UiClass(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        #current file
+        self.current_file = None
+
+        self.dark_mode = False
+
         self.initUI()
 
     def initUI(self):
@@ -34,6 +39,11 @@ class UiClass(QMainWindow):
         save_button.clicked.connect(self.save_note)
         toolbar.addWidget(save_button)
 
+        #dark mode
+        dark_mode_button = QPushButton('Change mode', self)
+        dark_mode_button.clicked.connect(self.toggle_dark_mode)
+        toolbar.addWidget(dark_mode_button)
+
 
         #navbar menu
         menu_bar = self.menuBar()
@@ -59,18 +69,25 @@ class UiClass(QMainWindow):
     
     #save button function
     def save_note(self):
-        options = QFileDialog.Options()
-        options != QFileDialog.DontUseNativeDialog 
-        file_name, _ = QFileDialog.getSaveFileName(self, "Save file", ".txt", "Text files (*.txt);;All files (*)", options=options)
-        if file_name:
-            with open(file_name, 'w') as file:
+        if self.current_file is None:
+            options = QFileDialog.Options()
+            options != QFileDialog.DontUseNativeDialog 
+            file_name, _ = QFileDialog.getSaveFileName(self, "Save file", ".txt", "Text files (*.txt);;All files (*)", options=options)
+            if file_name:
+                with open(file_name, 'w') as file:
+                    file.write(self.text_edit.toPlainText())
+                self.current_file = file_name
+                self.update_window_title()
+        else:
+            with open(self.current_file, 'w') as file:
                 file.write(self.text_edit.toPlainText())
+            self.update_window_title()
     
     
 
     ### Alert ### 
 
-#check document
+    #check document
     def check_modified_document(self):
         if self.text_edit.document().isModified():
 
@@ -108,3 +125,26 @@ class UiClass(QMainWindow):
         if file_name:
             with open(file_name, 'r') as file:
                 self.text_edit.setPlainText(file.read())
+                self.current_file = file_name
+                self.update_window_title()
+
+#dark mode
+    def toggle_dark_mode(self):
+        self.dark_mode = not self.dark_mode
+        self.update_theme()
+
+    def update_theme(self):
+        if self.dark_mode:
+            self.setStyleSheet("background-color: black; color: lightgray;")
+            self.text_edit.setStyleSheet("background-color: black; color: lightgray")
+    
+#normal
+        else:
+            self.setStyleSheet("background-color: white; color: black;")
+            self.text_edit.setStyleSheet("background-color: white; color: black")
+
+    def update_window_title(self):
+        if self.current_file:
+            self.setWindowTitle(f'NoteX - {self.current_file}')
+        else:
+            self.setWindowTitle('NoteX')
