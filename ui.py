@@ -1,6 +1,6 @@
 import sys
 import typing
-from PyQt5.QtWidgets import  QToolBar, QMessageBox,  QMainWindow, QVBoxLayout, QTextEdit, QPushButton, QWidget, QFileDialog
+from PyQt5.QtWidgets import  QMenuBar, QAction, QApplication, QToolBar, QMessageBox,  QMainWindow, QVBoxLayout, QTextEdit, QPushButton, QWidget, QFileDialog
 
 class UiClass(QMainWindow):
     def __init__(self):
@@ -28,20 +28,34 @@ class UiClass(QMainWindow):
         toolbar = QToolBar(self)
         self.addToolBar(toolbar)
         
-        #open button
-        open_button = QPushButton('Open file', self)
-        open_button.clicked.connect(self.open_note)
-        toolbar.addWidget(open_button)
 
         #save button
         save_button = QPushButton('Save', self)
         save_button.clicked.connect(self.save_note)
         toolbar.addWidget(save_button)
 
-        #create new file button
-        new_button = QPushButton('New', self)
-        new_button.clicked.connect(self.new_note)
-        toolbar.addWidget(new_button)
+
+        #navbar menu
+        menu_bar = self.menuBar()
+        file_menu = menu_bar.addMenu('note')
+
+
+        #menu - new file
+        new_note_action = QAction('New note', self)
+        new_note_action.triggered.connect(self.new_note)
+        file_menu.addAction(new_note_action)
+
+
+        #menu - open file
+        open_note_action = QAction('Open note', self)
+        open_note_action.triggered.connect(self.open_note)
+        file_menu.addAction(open_note_action)
+
+
+        #menu - save file
+        save_note_action = QAction('Save', self)
+        save_note_action.triggered.connect(self.save_note)
+        file_menu.addAction(save_note_action)
     
     #open button funcion
     def open_note(self):
