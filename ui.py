@@ -1,12 +1,13 @@
 import sys
 import typing
-from PyQt5.QtWidgets import  QMessageBox,  QMainWindow, QVBoxLayout, QTextEdit, QPushButton, QWidget, QFileDialog
+from PyQt5.QtWidgets import  QToolBar, QMessageBox,  QMainWindow, QVBoxLayout, QTextEdit, QPushButton, QWidget, QFileDialog
 
 class UiClass(QMainWindow):
     def __init__(self):
         super().__init__()
 
         self.initUI()
+
     def initUI(self):
 
         #main window
@@ -16,25 +17,27 @@ class UiClass(QMainWindow):
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
 
-        layout = QVBoxLayout(central_widget)
-
         self.text_edit = QTextEdit(self)
-        layout.addWidget(self.text_edit)
+
+
+        #navbar
+        toolbar = QToolBar(self)
+        self.addToolBar(toolbar)
         
         #open button
         open_button = QPushButton('Open file', self)
         open_button.clicked.connect(self.open_note)
-        layout.addWidget(open_button)
+        toolbar.addWidget(open_button)
 
         #save button
         save_button = QPushButton('Save', self)
         save_button.clicked.connect(self.save_note)
-        layout.addWidget(save_button)
+        toolbar.addWidget(save_button)
 
         #create new file button
         new_button = QPushButton('New', self)
         new_button.clicked.connect(self.new_note)
-        layout.addWidget(new_button)
+        toolbar.addWidget(new_button)
     
     #open button funcion
     def open_note(self):
