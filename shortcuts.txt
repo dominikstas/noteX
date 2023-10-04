@@ -1,0 +1,3 @@
+save = ctrl + s
+bigger font = ctrl + 1
+smaller font = ctrl + 2

@@ -3,7 +3,7 @@ import typing
 from database import Database 
 from PyQt5.QtWidgets import  QShortcut, QMenuBar, QCheckBox, QAction, QApplication, QToolBar, QMessageBox,  QMainWindow, QVBoxLayout, QTextEdit, QPushButton, QWidget, QFileDialog
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QKeySequence
+from PyQt5.QtGui import QKeySequence, QTextCursor
 
 class UiClass(QMainWindow):
     def __init__(self):
@@ -16,6 +16,21 @@ class UiClass(QMainWindow):
         self.initUI()
 
         self.load_dark_mode_setting()
+
+        #font
+        self.font_size = 12
+        
+        #h1
+        increase_font_shortcut = QShortcut(QKeySequence("Ctrl+1"), self)
+        increase_font_shortcut.activated.connect(self.increase_font)
+
+        #h1 - back
+        decrease_font_shortcut = QShortcut(QKeySequence("Ctrl+2"), self)
+        decrease_font_shortcut.activated.connect(self.decrease_font)
+
+
+
+
     def initUI(self):
 
         self.dark_mode = False 
@@ -173,3 +188,25 @@ class UiClass(QMainWindow):
         self.dark_mode = state == Qt.Checked
         self.db.save_dark_mode_setting(self.dark_mode)
         self.update_theme()
+    
+
+    ### Font ###
+
+    #h1 
+    def increase_font(self):
+        self.update_font(3)
+
+    #h1 - back
+    def decrease_font(self):
+        self.update_font(-3)
+
+
+    def update_font(self, num):
+        cursor = self.text_edit.textCursor()
+        char_format = cursor.charFormat()
+
+        current_size = char_format.fontPointSize()
+        new_size = max(1, current_size + num)  # Nie pozwól na rozmiar mniejszy niż 1
+
+        char_format.setFontPointSize(new_size)
+        cursor.mergeCharFormat(char_format)
