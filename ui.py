@@ -3,7 +3,7 @@ import typing
 from database import Database 
 from PyQt5.QtWidgets import  QShortcut, QMenuBar, QCheckBox, QAction, QApplication, QToolBar, QMessageBox,  QMainWindow, QVBoxLayout, QTextEdit, QPushButton, QWidget, QFileDialog
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QKeySequence, QTextCursor
+from PyQt5.QtGui import QKeySequence, QTextCursor, QTextListFormat
 
 class UiClass(QMainWindow):
     def __init__(self):
@@ -96,6 +96,11 @@ class UiClass(QMainWindow):
         dark_mode_checkbox.setChecked(self.dark_mode)
         dark_mode_checkbox.stateChanged.connect(self.toggle_auto_dark_mode)
         toolbar.addWidget(dark_mode_checkbox)
+
+        #list button
+        bullet_list_button = QPushButton('Bullet list', self)
+        bullet_list_button.clicked.connect(self.insert_bullet_list)
+        toolbar.addWidget(bullet_list_button)
 
     #save button function
     def save_note(self):
@@ -206,7 +211,23 @@ class UiClass(QMainWindow):
         char_format = cursor.charFormat()
 
         current_size = char_format.fontPointSize()
-        new_size = max(1, current_size + num)  # Nie pozwól na rozmiar mniejszy niż 1
+        new_size = max(1, current_size + num)
 
         char_format.setFontPointSize(new_size)
         cursor.mergeCharFormat(char_format)
+
+    #bullet list
+    def insert_bullet_list(self):
+        cursor = self.text_edit.textCursor()
+
+        #check if its on or off
+        cursor.movePosition(QTextCursor.StartOfBlock)
+        list_format = cursor.blockFormat().toListFormat()
+
+        if list_format.isValid() and list_format.style() == QTextListFormat.ListDisc:
+            cursor.movePosition(QTextCursor.EndOfBlock)
+            cursor.insertBlock()
+        else:
+            new_list_format = QTextListFormat()
+            new_list_format.setStyle(QTextListFormat.ListDisc)
+            cursor.createList(new_list_format)

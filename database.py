@@ -6,14 +6,7 @@ class Database:
         self.conn = sqlite3.connect(db_name)
         self.c = self.conn.cursor()
 
-        # Utwórz tabelę 'settings', jeśli nie istnieje
-        self.c.execute('''
-            CREATE TABLE IF NOT EXISTS settings (
-                id INTEGER PRIMARY KEY,
-                dark_mode INTEGER
-            )
-        ''')
-
+    #save dark mode
     def load_dark_mode_setting(self):
         self.c.execute('SELECT dark_mode FROM settings WHERE id = 1')
         result = self.c.fetchone()
