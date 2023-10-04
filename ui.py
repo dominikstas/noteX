@@ -1,6 +1,8 @@
 import sys
 import typing
-from PyQt5.QtWidgets import  QMenuBar, QAction, QApplication, QToolBar, QMessageBox,  QMainWindow, QVBoxLayout, QTextEdit, QPushButton, QWidget, QFileDialog
+from database import Database 
+from PyQt5.QtWidgets import  QMenuBar, QCheckBox, QAction, QApplication, QToolBar, QMessageBox,  QMainWindow, QVBoxLayout, QTextEdit, QPushButton, QWidget, QFileDialog
+from PyQt5.QtCore import Qt
 
 class UiClass(QMainWindow):
     def __init__(self):
@@ -8,12 +10,14 @@ class UiClass(QMainWindow):
 
         #current file
         self.current_file = None
-
-        self.dark_mode = False
+        self.db = Database('settings.db')
 
         self.initUI()
 
+        self.load_dark_mode_setting()
     def initUI(self):
+
+        self.dark_mode = False  
 
         #main window
         self.setGeometry(100, 100, 800, 600)
@@ -66,7 +70,13 @@ class UiClass(QMainWindow):
         save_note_action = QAction('Save', self)
         save_note_action.triggered.connect(self.save_note)
         file_menu.addAction(save_note_action)
-    
+
+        #choose main mode
+        dark_mode_checkbox = QCheckBox('Automate mode', self)
+        dark_mode_checkbox.setChecked(self.dark_mode)
+        dark_mode_checkbox.stateChanged.connect(self.toggle_auto_dark_mode)
+        toolbar.addWidget(dark_mode_checkbox)
+
     #save button function
     def save_note(self):
         if self.current_file is None:
@@ -136,15 +146,25 @@ class UiClass(QMainWindow):
     def update_theme(self):
         if self.dark_mode:
             self.setStyleSheet("background-color: black; color: lightgray;")
-            self.text_edit.setStyleSheet("background-color: black; color: lightgray")
-    
-#normal
+            self.text_edit.setStyleSheet("background-color: black; color: lightgray;")
         else:
             self.setStyleSheet("background-color: white; color: black;")
-            self.text_edit.setStyleSheet("background-color: white; color: black")
+            self.text_edit.setStyleSheet("background-color: white; color: black;")
 
     def update_window_title(self):
         if self.current_file:
             self.setWindowTitle(f'NoteX - {self.current_file}')
         else:
             self.setWindowTitle('NoteX')
+
+
+    def load_dark_mode_setting(self):
+        self.dark_mode = self.db.load_dark_mode_setting()
+        self.update_theme()
+
+
+
+    def toggle_auto_dark_mode(self, state):
+        self.dark_mode = state == Qt.Checked
+        self.db.save_dark_mode_setting(self.dark_mode)
+        self.update_theme()
