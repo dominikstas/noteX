@@ -1,8 +1,9 @@
 import sys
 import typing
 from database import Database 
-from PyQt5.QtWidgets import  QMenuBar, QCheckBox, QAction, QApplication, QToolBar, QMessageBox,  QMainWindow, QVBoxLayout, QTextEdit, QPushButton, QWidget, QFileDialog
+from PyQt5.QtWidgets import  QShortcut, QMenuBar, QCheckBox, QAction, QApplication, QToolBar, QMessageBox,  QMainWindow, QVBoxLayout, QTextEdit, QPushButton, QWidget, QFileDialog
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QKeySequence
 
 class UiClass(QMainWindow):
     def __init__(self):
@@ -17,7 +18,11 @@ class UiClass(QMainWindow):
         self.load_dark_mode_setting()
     def initUI(self):
 
-        self.dark_mode = False  
+        self.dark_mode = False 
+
+        #save = ctrl + s
+        save_shortcut = QShortcut(QKeySequence("Ctrl+S"), self)
+        save_shortcut.activated.connect(self.save_note)
 
         #main window
         self.setGeometry(100, 100, 800, 600)
