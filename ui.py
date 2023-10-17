@@ -169,7 +169,7 @@ class UiClass(QMainWindow):
         self.db.save_dark_mode_setting(self.dark_mode)
         self.update_theme()
 
-    # Font
+    #Font
     # Increase font size
     def increase_font(self):
         self.update_font(3)
@@ -182,7 +182,8 @@ class UiClass(QMainWindow):
         cursor = self.text_edit.textCursor()
         char_format = cursor.charFormat()
 
-        current_size = char_format.fontPointSize()
+        #not perfect
+        current_size = self.font_size
         new_size = max(1, current_size + num)
 
         char_format.setFontPointSize(new_size)
