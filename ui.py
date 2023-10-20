@@ -87,6 +87,10 @@ class UiClass(QMainWindow):
         dark_mode_checkbox.stateChanged.connect(self.toggle_auto_dark_mode)
         toolbar.addWidget(dark_mode_checkbox)
 
+        # Load dark mode setting from the database and set the checkbox state
+        self.load_dark_mode_setting()
+        dark_mode_checkbox.setChecked(self.dark_mode)
+
         # List button
         bullet_list_button = QPushButton('Bullet list', self)
         bullet_list_button.clicked.connect(self.insert_bullet_list)
@@ -136,7 +140,7 @@ class UiClass(QMainWindow):
         if not self.check_modified_document():
             return
         options = QFileDialog.Options()
-        options != QFileDialog.ReadOnly
+        options = QFileDialog.ReadOnly
         file_name, _ = QFileDialog.getOpenFileName(self, "Open file", "", "Text files (*.txt);;All files (*)", options=options)
         if file_name:
             with open(file_name, 'r') as file:
@@ -163,6 +167,8 @@ class UiClass(QMainWindow):
     def load_dark_mode_setting(self):
         self.dark_mode = self.db.load_dark_mode_setting()
         self.update_theme()
+        #dark_mode_checkbox.setChecked(self.dark_mode)
+
 
     def toggle_auto_dark_mode(self, state):
         self.dark_mode = state == Qt.Checked

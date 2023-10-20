@@ -1,5 +1,9 @@
 save = ctrl + s
 
+
 !!!To edit font, you need to click on written text, and then use shortcut!!!
+
 bigger font = ctrl + 1
 smaller font = ctrl + 2
+
+Currently you can only increase/decrease font by 1

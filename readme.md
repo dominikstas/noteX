@@ -29,4 +29,5 @@ That's it for now. However, future updates will introduce more features, and the
 
 ## Tech
 
-NoteX is written in Python, utilizing PyQt5 for the user interface.
+NoteX is written in Python, utilizing PyQt5 for the user interface and SQLite for the 
+auto dark mode function.

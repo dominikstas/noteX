@@ -1,3 +1,2 @@
-1.1.4
-- checkbox bug
-- font editor is not perfect
+1.1.5
+- font editor may be upgraded
