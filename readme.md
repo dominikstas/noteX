@@ -1,33 +1,73 @@
-# NoteX v1.1
+# NoteX - Simple Note-Taking Application
 
-A Simple Note App
+NoteX is a simple note-taking application built using Python and PyQt5.
 
-## What and Why
+## Table of Contents
+- [Description](#description)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Keyboard Shortcuts](#keyboard-shortcuts)
+- [Customization](#customization)
+- [Contributing](#contributing)
 
-NoteX is currently a straightforward text editor with aspirations to evolve into a more modern and advanced writing application. The motivation behind its creation is quite simple; I needed an application to take notes for my studies that works on Ubuntu, doesn't require any subscriptions, or involve payments. So, I thought, "Why not create it myself?"
 
-## v1.1
-At its current version (v1.1), NoteX is essentially a simple notepad with the following features:
+## Description
 
-- Write notes
-- Open and edit .txt files
-- Save files
-- Light/Dark mode
-- Popping alert when you forget to save your note
-- It shows name of the open file
-- Better design (a little)
-- Navbar file menu ('note' button)
+NoteX is a lightweight note-taking application designed for easy use. It provides basic functionality for creating, editing, and saving notes. The application features a simple user interface with a toolbar for quick access to common actions. The motivation behind its creation is quite simple; I needed an application to take notes for my studies that works on Ubuntu, doesn't require any subscriptions, or involve payments. So, I thought, "Why not create it myself?"
+
+## Features
+
+- Create, edit, and save notes
+- Dark mode for comfortable use in low-light environments
+- Customizable font size
+- Quick access to common actions through the toolbar
+- Automatic mode to switch between light and dark modes based on user preferences
 
 ![plot](https://github.com/dominikstas/noteX/blob/main/ss/1.png)
 
 
 ![plot](https://github.com/dominikstas/noteX/blob/main/ss/2.png)
 
+## Technologies Used
 
-That's it for now. However, future updates will introduce more features, and the design will undoubtedly become more aesthetically pleasing.
+- **Python 3:** The programming language used to build the application.
+- **PyQt5:** A set of Python bindings for Qt libraries, used for creating the graphical user interface.
+- **SQLite:** A lightweight database engine used for storing user preferences.
 
+## Installation
 
-## Tech
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-username/NoteX.git
+   ```
 
-NoteX is written in Python, utilizing PyQt5 for the user interface and SQLite for the 
-auto dark mode function.
+2. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## Usage
+
+To run the application, execute the following command:
+```bash
+python main.py
+```
+
+## Keyboard Shortcuts
+
+- **Ctrl + S:** Save the current note.
+- **Ctrl + 1:** Increase font size.
+- **Ctrl + 2:** Decrease font size.
+
+## Customization
+
+- **Dark Mode:**
+  - Click the "Change mode" button in the toolbar.
+  - Enable the "Automate mode" checkbox for automatic mode switching based on user preferences.
+
+## Contributing
+
+If you would like to contribute to the development of NoteX, feel free and welcome!
+
